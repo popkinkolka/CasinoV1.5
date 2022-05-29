@@ -24,7 +24,7 @@ public class Gameplay {
     public int calculatesNumberPlayers(){
         int numberPlayers = 0;
         System.out.println("Игроков может быть от 2 до 5");
-        System.out.println("Скалько игроков тебе надо?");
+        System.out.println("Скалько оппонентов тебе надо?");
         Scanner scanner = new Scanner(System.in);
         do {
             try {

@@ -4,9 +4,9 @@ public class Authorization {
     public  Player getHuman() {
         Scanner scanner = new Scanner(System.in);
         Player human = new Player();
-        System.out.println("Логин мне запили");
+        System.out.println("Логин свой запили");
         human.setName(scanner.nextLine());
-        System.out.println("Год нужен в формате цифирки");
+        System.out.println("А годик тебе какой текёт");
         int humanAge = 0;
         try {
             humanAge = human.setAge(Integer.parseInt(scanner.nextLine()));
