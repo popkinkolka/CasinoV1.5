@@ -6,7 +6,7 @@ public class Player {
     private String name;
     private int age;
     private String gender;
-    private int resultsBolvanchik;
+    private int resultsPlayer;
 
     public String getName() {
         return name;
@@ -38,38 +38,37 @@ public class Player {
     }
 
 
-    public int getResultsBolvanchik() {
-        return resultsBolvanchik;
+    public int getResultsPlayer() {
+        return resultsPlayer;
     }
 
-    public void setResultsBolvanchik(int resultsBolvanchik) {
-        this.resultsBolvanchik = resultsBolvanchik;
+    public void setResultsPlayer(int resultsPlayer) {
+        this.resultsPlayer = resultsPlayer;
     }
 
-    public Player(String name, String age, String gender) {
+    public Player(String name, String gender) {
         this.name = name;
-        this.age = Integer.parseInt(age);
+        this.age = new Random().ints(5, 18, 89).findFirst().getAsInt();
         this.gender = gender;
     }
 
     public Player() {
     }
 
-    public static List<Player> createOpponents(int number) {
+    public static List<Player> createPlayers(int number) {
         File file = new File();
         Random random = new Random();
-        List<Player> bots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
         List<String> names = file.readFile("Name.txt");
-        List<String> ages = file.readFile("Age.txt");
         List<String> genders = file.readFile("Gender.txt");
         for (int i = 0; i < number; i++){
             Player player = new Player(
                     names.get(random.nextInt(names.size())),
-                    ages.get(random.nextInt(ages.size())),
                     genders.get(random.nextInt(genders.size()))
+
             );
-            bots.add(player);
+            players.add(player);
         }
-        return bots;
+        return players;
     }
 }
