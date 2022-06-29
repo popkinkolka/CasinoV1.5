@@ -46,12 +46,6 @@ public class Player {
         this.resultsPlayer = resultsPlayer;
     }
 
-    public Player(String name, String gender) {
-        this.name = name;
-        this.age = new Random().ints(5, 18, 89).findFirst().getAsInt();
-        this.gender = gender;
-    }
-
     public Player() {
     }
 
@@ -61,12 +55,22 @@ public class Player {
         List<Player> players = new ArrayList<>();
         List<String> names = file.readFile("Name.txt");
         List<String> genders = file.readFile("Gender.txt");
+        List<Integer> usedNumbersOfNames = new ArrayList<>();
+        List<Integer> usedNumbersOfGenders = new ArrayList<>();
+        int randomIndex;
         for (int i = 0; i < number; i++){
-            Player player = new Player(
-                    names.get(random.nextInt(names.size())),
-                    genders.get(random.nextInt(genders.size()))
-
-            );
+            Player player = new Player();
+            do{
+                randomIndex = random.nextInt(names.size());
+                player.setName(names.get(randomIndex));
+            } while (usedNumbersOfNames.contains(randomIndex));
+            usedNumbersOfNames.add(randomIndex);
+            do{
+                randomIndex = random.nextInt(names.size());
+                player.setGender(genders.get(randomIndex));
+            } while (usedNumbersOfGenders.contains(randomIndex));
+            player.setAge(new Random().nextInt(71)+18);
+            usedNumbersOfGenders.add(randomIndex);
             players.add(player);
         }
         return players;

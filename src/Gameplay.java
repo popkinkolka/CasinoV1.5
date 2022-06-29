@@ -5,40 +5,43 @@ import java.util.Scanner;
 
 public class Gameplay {
     public int calculatesNumberRounds(){
+        Texts texts = new Texts();
         int numberRounds = 0;
-        System.out.println("Раундов может быть от 2 до 5");
-        System.out.println("Скалько раундов тебе надо?");
+        System.out.println(texts.getText("quantityRound"));
+        System.out.println(texts.getText("askRound"));
         Scanner scanner = new Scanner(System.in);
         do {
             try {
                 numberRounds = Integer.parseInt(String.valueOf(scanner.nextLine()));
             } catch (NumberFormatException e) {
-                System.out.println("Ну ты блять совсем трижды тупой, Я Ж ТЕБЕ ПРЯМЫМ ТЕКСТОМ НАПИСАЛ, СЕРЫМ ПО ТЕМНО-СЕРОМУ, цифру не букву");
+                System.out.println(texts.getText("needNumber"));
             }
             if (numberRounds < 2 | numberRounds > 5) {
-                System.out.println("ЦИИИФРУУУ от 2 до 5");
+                System.out.println(texts.getText("rangeValues"));
             }
         } while (numberRounds < 2 | numberRounds > 5);
         return numberRounds;
     }
     public int calculatesNumberPlayers(){
+        Texts texts = new Texts();
         int numberPlayers = 0;
-        System.out.println("Игроков может быть от 2 до 5");
-        System.out.println("Скалько оппонентов тебе надо?");
+        System.out.println(texts.getText("quantityPlayers"));
+        System.out.println(texts.getText("askPlayers"));
         Scanner scanner = new Scanner(System.in);
         do {
             try {
                 numberPlayers = Integer.parseInt(String.valueOf(scanner.nextLine()));
             } catch (NumberFormatException e) {
-                System.out.println("Ну ты блять совсем трижды тупой, Я Ж ТЕБЕ ПРЯМЫМ ТЕКСТОМ НАПИСАЛ, СЕРЫМ ПО ТЕМНО-СЕРОМУ, цифру не букву");
+                System.out.println(texts.getText("needNumber"));
             }
             if (numberPlayers < 2 | numberPlayers > 5) {
-                System.out.println("ЦИИИФРУУУ от 2 до 5");
+                System.out.println(texts.getText("rangeValues"));
             }
         } while (numberPlayers < 2 | numberPlayers > 5);
         return numberPlayers;
     }
     public List<Player> returningResults() {
+        Texts texts = new Texts();
         Authorization authorization = new Authorization();
         Player human = authorization.getHuman();
         int numberPlayers = calculatesNumberPlayers();
@@ -46,18 +49,19 @@ public class Gameplay {
         Scanner scanner = new Scanner(System.in);
         List<Player> addResults = Player.createPlayers(numberPlayers);
         for (int i = 1; i <= numberRounds; i++) {
-            System.out.println("\nРаунд " + i);
-            System.out.println("Игрок по имени: " + human.getName() + " Возраст = " + human.getAge() + " Гендер = " + human.getGender());
+            System.out.println(texts.getText("round") + i);
+            System.out.println(texts.getText("namesPlayer") + human.getName() + texts.getText("age") + human.getAge() + texts.getText("Gender") + human.getGender());
             int randomValueCubeHuman;
             do {
                 randomValueCubeHuman = (int) (Math.random() * 100);
-                System.out.println("Нажмите Enter что бы бросить кубик");
+                System.out.println(texts.getText("diceRoll"));
                 scanner.nextLine();
             } while (randomValueCubeHuman == 0);
-            System.out.println("Бросок кубика за раунд " + i + " = " + randomValueCubeHuman);
+            System.out.println(texts.getText("diceRollRound") + i + " = " + randomValueCubeHuman);
             int oldValueCubeHuman = human.getResultsPlayer();
             human.setResultsPlayer(oldValueCubeHuman + randomValueCubeHuman);
-            System.out.println("Результат броска кубика  = " + human.getResultsPlayer());
+            System.out.println(texts.getText("resultDiceRoll") + human.getResultsPlayer());
+            System.out.println("-------------------------------------------------------------");
             for (Player player : addResults) {
                 int randomValueCubePlayers;
                 do {
@@ -66,17 +70,19 @@ public class Gameplay {
                 int oldValueCubePlayers = player.getResultsPlayer();
                 player.setResultsPlayer(oldValueCubePlayers + randomValueCubePlayers);
                 System.out.println("\n");
-                System.out.println("Игрок:" + player.getName() + " Возраст:" + player.getAge() + " Гендер:" + player.getGender());
-                System.out.println("Бросок кубика за раунд " + i + " = " + randomValueCubePlayers);
-                System.out.println("Результат броска кубика игрока = " + player.getResultsPlayer());
+                System.out.println(texts.getText("namesPlayer") + player.getName() + texts.getText("age") + player.getAge() + texts.getText("Gender") + player.getGender());
+                System.out.println(texts.getText("diceRollRound") + i + " = " + randomValueCubePlayers);
+                System.out.println(texts.getText("resultDiceRoll") + " " + player.getResultsPlayer());
+                System.out.println("-------------------------------------------------------------");
             }
         }
         addResults.add(human);
         return addResults;
     }
     public void determiningWinner() {
+        Texts texts = new Texts();
         Gameplay gameplay = new Gameplay();
         Player winner = Collections.max(gameplay.returningResults(), Comparator.comparing(Player::getResultsPlayer));
-        System.out.println("\nВЫЙГРАЛ: " + winner.getName() + " Возраст:" + winner.getAge() + " Гендер:" + winner.getGender());
+        System.out.println(texts.getText("win") + winner.getName() + texts.getText("age") + winner.getAge() + texts.getText("Gender") + winner.getGender());
     }
 }
